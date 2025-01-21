@@ -1,4 +1,6 @@
 ﻿@inject IJSRuntime JSRuntime
+@using BarcodeGenerator.Utils
+
 
 @page "/"
 
@@ -11,16 +13,16 @@
 
 <div class="py-4">
     <InputRadioGroup Name="barcodeFormat" @bind-Value="SelectedFormat">
-        <label>
-            <InputRadio Value="ZXing.BarcodeFormat.QR_CODE" />
+        <label class="mx-2 cursor:pointer">
+            <InputRadio Value='"QR_CODE"' />
             QR Code
         </label>
-        <label>
-            <InputRadio Value="ZXing.BarcodeFormat.CODE_128" />
+        <label class="mx-2">
+            <InputRadio Value='"CODE_128"' />
             Code 128
         </label>
-        <label>
-            <InputRadio Value="ZXing.BarcodeFormat.AZTEC" />
+        <label class="mx-2">
+            <InputRadio Value='"AZTEC"' />
             AZTEC
         </label>
     </InputRadioGroup>
@@ -37,25 +39,7 @@
 @code {
     private string InputValue = "";
     private string BarcodeImage = "";
-    private ZXing.BarcodeFormat SelectedFormat = ZXing.BarcodeFormat.QR_CODE;
-
-
-
-    private string GenerateBarcode(string value, ZXing.BarcodeFormat format)
-    {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            return string.Empty;
-        }
-
-        var writer = new ZXing.BarcodeWriterSvg
-            {
-                Format = format
-            };
-
-        var svg = writer.Write(value);
-        return $"data:image/svg+xml;base64,{Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(svg.Content))}";
-    }
+    private string SelectedFormat = "QR_CODE";
 
     private async Task HandleGenerateBarcode()
     {
@@ -65,7 +49,7 @@
             return;
         }
 
-        BarcodeImage = GenerateBarcode(InputValue, SelectedFormat);
+        BarcodeImage = BarcodeGenerator.Utils.BarcodeUtils.GenerateBarcode(InputValue, SelectedFormat);
 
     }
 }
