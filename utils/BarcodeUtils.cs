@@ -16,7 +16,7 @@ namespace BarcodeGenerator.Utils
                 "QR_CODE" => BarcodeFormat.QR_CODE,
                 "CODE_128" => BarcodeFormat.CODE_128,
                 "AZTEC" => BarcodeFormat.AZTEC,
-                _ => BarcodeFormat.QR_CODE
+                _ => throw new ArgumentException("Provide valid Barcode Format"),
             };
 
             var writer = new ZXing.BarcodeWriterSvg
