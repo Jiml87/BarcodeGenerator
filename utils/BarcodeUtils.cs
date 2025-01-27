@@ -8,7 +8,7 @@ namespace BarcodeGenerator.Utils
         {
             if (string.IsNullOrWhiteSpace(inputValue))
             {
-                return string.Empty;
+                throw new ArgumentException("Provide valid text");
             }
 
             BarcodeFormat barcodeFormat = format switch
